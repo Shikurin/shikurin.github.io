@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title> setInterval/clearInterval exemple </title>
+		<script> 
+			
+			var intervalID = setInterval(diminuerCompteur, 1000);
+			
+			var compteur; 
+			
+			function init() {
+				compteur = 10;
+				document.getElementById("cpt").innerHTML=compteur;
+			}
+			
+			function diminuerCompteur() {
+				compteur -= 1;
+				document.getElementById("cpt").innerHTML=compteur;
+				if (compteur === 0) {
+					clearInterval(intervalID);
+				}
+			}
+			
+		</script>
+	</head>
+	<body onload='init()'>
+		<h1>
+			Compteur : <span id="cpt"> </span>
+		</h1>
+	</body>
+</html>
