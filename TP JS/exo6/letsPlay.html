@@ -1,0 +1,35 @@
+<html>
+	<head>
+	<script type="text/javascript">
+
+		function init() {
+
+			var canevas = document.getElementById("myCanvas");
+			
+			var ctx = canevas.getContext('2d');
+
+			var x = 100;    // Coordonnée x
+			var y = 100;    // Coordonnée y
+			var rayon = 50; // Rayon de l'arc
+			
+			for(var i = 0; i < 20; i++) { 
+
+				var angleInitial = (Math.PI/180)*18*i; // Point de départ sur le cercle
+				var angleFinal = (Math.PI/180)*18*(i+1); // Point d'arrivée sur le cercle
+				var antihoraire = false; // Horaire ou antihoraire
+
+				ctx.beginPath();
+				ctx.arc(x, y, rayon, angleInitial, angleFinal, antihoraire);
+				ctx.stroke();
+
+			}
+
+		}
+
+	</script>
+	</head>
+
+	<body onload='init()'>
+		<canvas id="myCanvas" width="200" height="200"/>
+	</body>
+</html>
