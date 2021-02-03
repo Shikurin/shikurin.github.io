@@ -1,35 +1,68 @@
 <html>
 	<head>
-	<script type="text/javascript">
+		<script type="text/javascript">
 
-		function init() {
+			function init()	{
 
-			var canevas = document.getElementById("myCanvas");
+				var canevas;
+				var ctx;
+	
+				var x;
+				var y;
+				var rayon;
+
+				function init_canvas() {
+
+					canevas = document.getElementById("myCanvas");
 			
-			var ctx = canevas.getContext('2d');
+					ctx = canevas.getContext('2d');
+				
+					x = 100;    // Coordonnée x
+					y = 100;    // Coordonnée y
+					rayon = 50; // Rayon de l'arc
+				
+				}
 
-			var x = 100;    // Coordonnée x
-			var y = 100;    // Coordonnée y
-			var rayon = 50; // Rayon de l'arc
+				function updateProgress() {
 			
-			for(var i = 0; i < 20; i++) { 
+					ctx = canevas.getContext('2d');
+					
+					if (v.currentTime != 0) {
 
-				var angleInitial = (Math.PI/180)*18*i; // Point de départ sur le cercle
-				var angleFinal = (Math.PI/180)*18*(i+1); // Point d'arrivée sur le cercle
-				var antihoraire = false; // Horaire ou antihoraire
+						for (var i = 0; i < 20; i++) { 
 
-				ctx.beginPath();
-				ctx.arc(x, y, rayon, angleInitial, angleFinal, antihoraire);
-				ctx.stroke();
+							var angleInitial = (Math.PI/180)*18*i;   // Point de départ sur le cercle
+							var angleFinal = (Math.PI/180)*18*(i+1); // Point d'arrivée sur le cercle
+							var antihoraire = false;  // Horaire ou antihoraire
 
-			}
+							ctx.beginPath();
+							ctx.arc(x, y, rayon, angleInitial, angleFinal, antihoraire);
+							ctx.stroke();
 
-		}
+						}
 
-	</script>
+					}
+		
+				}
+				
+				init_canvas();
+				console.log("Je suis la ?");
+				var v = document.getElementById("audio");
+				console.log("Je suis ici ?");
+				v.addEventListener("timeupdate", updateProgress());
+				console.log("Je suis ici ? " + v.currentTime);
+			}	
+		
+		</script>
 	</head>
 
 	<body onload='init()'>
-		<canvas id="myCanvas" width="200" height="200"/>
+		<canvas id="myCanvas" width="200" height="200"> </canvas>
+
+		<!-- La partie audio -->
+		<audio id="audio" controls>
+			<source src="http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg" type="audio/ogg">
+		</audio>
+
 	</body>
 </html>

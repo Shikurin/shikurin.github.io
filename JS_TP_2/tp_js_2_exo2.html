@@ -3,20 +3,61 @@
 	<head>
 		<meta charset="UTF-8">
 		<title> canevas exemple </title>
-		<script> 
+		<script>
+
+			var intervalID = setInterval(step, 1000);
+
+			var canevas;
+			const canevasLongueur = 600;
+			const canevasLargeur = 600;
+
+			var limites;
+
+			var carre;
+			const carreLongueur = 50;
+			const carreLargeur = 50;
+			var carrePosX = 0;
+			var carrePosY = 0;
 			
 			function init() {
-				var canvas = document.getElementById('canvas');
-				var ctx = canvas.getContext('2d');
-				ctx.fillStyle = 'green';
-				ctx.fillRect(10, 10, 100, 100);
+
+				canevas = document.getElementById("myCanvas");
+
+				limites = canevas.getContext('2d');
+				// limites.strokeRect(0, 0, canevasLongueur, canevasLargeur);
+
+				carre = canevas.getContext('2d');
+				carre.fillStyle = 'red';
+				dessinerCarre();
+			}
+			
+			function step() {
+				if (carrePosX === 550) {
+					// On arrête le carré s'il atteint la limite du canevas
+					clearInterval(intervalID);
+				} else {
+					// Le carré peut avancer de 10 pixels
+					effacerCarre();
+					carrePosX += 10;
+					dessinerCarre();
+				}
+			}
+
+			function effacerCarre() {
+				// On efface l'ancien carré pour donner l'impression qu'on le fait avancer
+				carre.clearRect(carrePosX, carrePosY, carreLongueur, carreLargeur);
+			}
+			
+			function dessinerCarre() {
+				// On dessine le carré à partir de sa position
+				carre.fillRect(carrePosX, carrePosY, carreLongueur, carreLargeur);
 			}
 			
 		</script>
 	</head>
 	<body onload='init()'>
-		<canvas id="canvas" width="600" height="600">
-		Désolé, votre navigateur ne prend âs en charge &lt;canvas&gt;.
+		<canvas id="myCanvas" width="600" height="600" style="border: 1px solid">
+		Désolé, votre navigateur ne prend pas en charge &lt;canvas&gt;.
 		</canvas>
 	</body>
 </html>
