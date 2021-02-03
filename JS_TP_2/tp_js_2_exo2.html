@@ -5,11 +5,11 @@
 		<title> canevas exemple </title>
 		<script>
 
-			var intervalID = setInterval(step, 1000);
+			var intervalID;
 
 			var canevas;
-			const canevasLongueur = 600;
-			const canevasLargeur = 600;
+			// const canevasLongueur = 600;
+			// const canevasLargeur = 600;
 
 			var carre;
 			const carreLongueur = 50;
@@ -24,6 +24,9 @@
 				carre = canevas.getContext('2d');
 				carre.fillStyle = 'red';
 				dessinerCarre();
+
+				intervalID = setInterval(step, 1000);
+
 			}
 			
 			function step() {
@@ -40,12 +43,12 @@
 
 			function effacerCarre() {
 				// On efface l'ancien carré pour donner l'impression qu'on le fait avancer
-				carre.clearRect(carrePosX, carrePosY, carreLongueur, carreLargeur);
+				carre.clearRect(carrePosX, carrePosY, carreLargeur, carreLongueur);
 			}
 			
 			function dessinerCarre() {
 				// On dessine le carré à partir de sa position
-				carre.fillRect(carrePosX, carrePosY, carreLongueur, carreLargeur);
+				carre.fillRect(carrePosX, carrePosY, carreLargeur, carreLongueur);
 			}
 			
 		</script>

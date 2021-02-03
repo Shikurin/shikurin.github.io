@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title> plusieurs carrés en même temps </title>
+		<script>
+
+			var intervalID;
+
+			var canevas;
+
+			var carre;
+			const carreHauteur = 50;
+			const carreLargeur = 50;
+			const carreCouleur = 'red';
+			var carrePosX = 0;
+			var carrePosY = 0;
+			
+			function init() {
+
+				canevas = document.getElementById("myCanvas");
+				canevas.width = 600;
+				canevas.height = 600;
+
+				carre = canevas.getContext('2d');
+				carre.fillStyle = 'red';
+				dessinerCarre();
+
+				intervalID = setInterval(step, 1000);
+
+			}
+
+
+			class Square {
+
+				constructor(carre, couleur, largeur, hauteur, x, y, delai) {
+					this.carre = carre;
+					this.couleur = couleur;
+					this.largeur = largeur;
+					this.hauteur = hauteur;
+					this.x = x;
+					this.y = y;
+					// this.frameIndex = 0;
+					this.delai = delai;
+					this.hasStarted = false;
+				}
+
+				dessinerCarre() {
+					carre.fillRect(carrePosX, carrePosY, carreLargeur, carreLongueur);
+				}
+
+				update() {
+					if ((this.hasStarted == false) && (this.delay<wallClock)) {
+						console.log("starting");
+						this.hasStarted=true;
+					}
+
+					if ( (this.hasStarted == true) && (wallClock%this.speed == 0)) {
+						if (this.frameIndex < this.numberOfFrames - 1) {	
+							this.frameIndex += 1;
+						} else {
+							this.frameIndex = 0;
+						}
+					}
+				}
+
+				effacerCarre() {
+					this.carre.clearRect(this.x, this.y, this.largeur, this.hauteur);
+				}
+
+			}
+
+			
+			function step() {
+				if (carrePosX === 550) {
+					// On arrête le carré s'il atteint la limite du canevas
+					clearInterval(intervalID);
+				} else {
+					// Le carré peut avancer de 10 pixels
+					effacerCarre();
+					carrePosX += 10;
+					dessinerCarre();
+				}
+			}
+
+			
+
+			const objetsEnJeu = new Array();
+
+		    	const carre1 = new Square(carre, carreCouleur, carreLargeur, carreHauteur, carrePosX, carrePosY, 0);
+		   	const carre2 = new Square(carre, carreCouleur, carreLargeur, carreHauteur, carrePosX, carrePosY, 100);
+		   	const carre3 = new Square(carre, carreCouleur, carreLargeur, carreHauteur, carrePosX, carrePosY, 200);
+			
+		</script>
+	</head>
+	<body onload='init()'>
+		<canvas id="myCanvas" style="border: 1px solid">
+		Désolé, votre navigateur ne prend pas en charge &lt;canvas&gt;.
+		</canvas>
+	</body>
+</html>
