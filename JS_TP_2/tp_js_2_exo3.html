@@ -2,24 +2,35 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title> canevas exemple </title>
+		<title> setTimeout exemple </title>
 		<script>
 
-			var intervalID = setInterval(step, 1000);
+			var intervalID;
 
 			var canevas;
 			const canevasLongueur = 600;
 			const canevasLargeur = 600;
+
+			var limites;
 
 			var carre;
 			const carreLongueur = 50;
 			const carreLargeur = 50;
 			var carrePosX = 0;
 			var carrePosY = 0;
+
+			function initApres2sec() {
+				setTimeout(init, 2000);
+			}
 			
 			function init() {
 
+				intervalID = setInterval(step, 1000);
+
 				canevas = document.getElementById("myCanvas");
+
+				limites = canevas.getContext('2d');
+				// limites.strokeRect(0, 0, canevasLongueur, canevasLargeur);
 
 				carre = canevas.getContext('2d');
 				carre.fillStyle = 'red';
@@ -50,7 +61,7 @@
 			
 		</script>
 	</head>
-	<body onload='init()'>
+	<body onload='initApres2sec()'>
 		<canvas id="myCanvas" width="600" height="600" style="border: 1px solid">
 		Désolé, votre navigateur ne prend pas en charge &lt;canvas&gt;.
 		</canvas>
