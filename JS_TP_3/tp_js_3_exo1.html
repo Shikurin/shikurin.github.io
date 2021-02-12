@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title> XMLHttpRequest </title>
+		<script>
+		
+			var canevas;
+			
+			var cercle;
+			var x_position = 0;
+			var y_position = 0;
+			const rayon = 50;
+			
+			var intervalID;
+			
+			var xhr_object = null;
+			
+			function init() {
+			
+				canevas = document.getElementById("myCanvas");
+				
+				cercle = canevas.getContext('2d');
+				
+				xhr_object = new XMLHttpRequest();
+				
+				xhr_object.onreadystatechange = () => {
+					if (xhr_object.readyState === 4) {
+						effacerCercle();
+						getNewPositions(xhr_object.responseText);
+						console.log("x = " + x_position);
+						console.log("y = " + y_position);
+						dessinerCercle();
+					}
+				}
+				
+				intervalID = setInterval(update, 1000);
+			
+			}
+			
+			function reqListener() {
+				console.log(this.responseText);
+			}
+			
+			function update() {
+				xhr_object.open("GET", "https://stwom.herokuapp.com/600");
+				xhr_object.send()
+				xhr_object.onload = reqListener;
+			}
+			
+			function getNewPositions(text) {
+				
+				const limitX = ',';
+				const limitY = '}';
+				
+				var cpt;
+				
+				var pos;
+				
+				pos = 6;
+				x_position = text.charAt(pos-1);
+				while (text.charAt(pos) != limitX) {
+					x_position = x_position + text.charAt(pos);
+					pos += 1;
+				}
+					
+				pos = pos + 6;
+				y_position = text.charAt(pos-1);
+				while (text.charAt(pos) != limitY) {
+					y_position = y_position + text.charAt(pos);
+					pos += 1;
+				}
+				
+			}
+			
+			function effacerCercle() {
+				// On efface l'ancien cercle
+				cercle.clearRect(x_position - rayon-1, y_position - rayon-1, (rayon+1) * 2, (rayon+1) * 2);
+			}
+			
+			function dessinerCercle() {
+				// On dessine le cercle à partir de sa position
+				cercle.beginPath()
+				cercle.arc(x_position, y_position, rayon, 0, 2 * Math.PI);
+				cercle.stroke()
+			}
+			
+		</script>
+	</head>
+	<body onload='init()'>
+		<canvas id="myCanvas" width="600" height="600" style="border: 1px solid">
+		Désolé, votre navigateur ne prend pas en charge &lt;canvas&gt;.
+		</canvas>
+	</body>
+</html>
