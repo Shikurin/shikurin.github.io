@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title> WebWorkers </title>
+		<script>
+		
+			var canevas;
+			
+			var spot;
+			var x_position = 0;
+			var y_position = 0;
+			const rayon = 10;
+
+			var monWorker;
+			
+
+			function init() {
+			
+				canevas = document.getElementById("myCanvas");
+				
+				spot = canevas.getContext('2d');
+				spot.fillStyle = 'red';
+
+				monWorker = new Worker('worker.js');
+
+				if (window.Worker) {
+ 
+					monWorker.onmessage = function(e) {
+						console.log('Message reçu depuis le worker.');
+						x_position = e.data[0];						
+						y_position = e.data[1];
+						console.log('Dessin du point aux coordonnées données.');
+						dessinerPoint();
+					}
+
+				}
+			
+			}
+			
+
+			/*
+			function effacerPoint() {
+				// On efface l'ancien point
+				spot.clearRect(x_position - rayon-1, y_position - rayon-1, (rayon+1) * 2, (rayon+1) * 2);
+			}*/
+			
+			function dessinerPoint() {
+				// On dessine le point à partir de sa position
+				spot.beginPath();
+				spot.arc(x_position, y_position, rayon, 0, 2 * Math.PI);
+				spot.fill();
+			}
+			
+		</script>
+	</head>
+	<body onload='init()'>
+		<canvas id="myCanvas" width="600" height="600" style="border: 1px solid">
+		Désolé, votre navigateur ne prend pas en charge &lt;canvas&gt;.
+		</canvas>
+	</body>
+</html>
