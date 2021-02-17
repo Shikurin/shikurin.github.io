@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title> WebWorkers et programmation objet </title>
+		<script>
+
+			var canevas;
+
+
+			class Spot {
+
+				constructor(couleur) {
+					this.rayon = 10;
+					this.couleur = couleur;
+					this.contexte = canevas.getContext('2d');
+				}
+
+
+				initWorker() {
+
+					this.monWorker = new Worker('worker.js');
+					var that = this;
+
+					if (window.Worker) {
+ 
+						(this.monWorker).onmessage = function(e) {
+							that.x_position = e.data[0];						
+							that.y_position = e.data[1];
+							that.dessiner();
+						}
+
+					}
+
+				}
+
+
+				dessiner() {
+					// On dessine le spot à partir de sa position
+					(this.contexte).fillStyle = this.couleur;
+					(this.contexte).beginPath();
+					(this.contexte).arc(this.x_position, this.y_position, this.rayon, 0, 2 * Math.PI);
+					(this.contexte).fill();
+				}
+
+				/*
+				function effacer() {
+					// On efface le spot
+					(this.contexte).clearRect(this.x_position - this.rayon-1, this.y_position - this.rayon-1, (this.rayon+1) * 2, (this.rayon+1) * 2);
+				}
+				*/
+			
+			}
+			
+
+			function init() {
+
+				canevas = document.getElementById("myCanvas");
+				
+				const spot1 = new Spot('red');
+				spot1.initWorker();
+				const spot2 = new Spot('orange');
+				spot2.initWorker();
+				const spot3 = new Spot('yellow');
+				spot3.initWorker();
+				const spot4 = new Spot('green');
+				spot4.initWorker();
+				const spot5 = new Spot('blue');
+				spot5.initWorker();
+				const spot6 = new Spot('purple');
+				spot6.initWorker();
+				const spot7 = new Spot('pink');
+				spot7.initWorker();
+				const spot8 = new Spot('black');
+				spot8.initWorker();
+				const spot9 = new Spot('grey');
+				spot9.initWorker();
+				const spot10 = new Spot('brown');
+				spot10.initWorker();
+			
+			}
+			
+		</script>
+	</head>
+	<body onload='init()'>
+		<canvas id="myCanvas" width="600" height="600" style="border: 1px solid">
+		Désolé, votre navigateur ne prend pas en charge &lt;canvas&gt;.
+		</canvas>
+	</body>
+</html>
